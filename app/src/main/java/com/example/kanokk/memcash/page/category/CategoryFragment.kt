@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.app.Fragment
 import android.os.Build
 import android.support.annotation.RequiresApi
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -19,6 +20,7 @@ import com.example.kanokk.memcash.model.Category
 import kotlinx.android.synthetic.main.fragment_category.*
 
 class CategoryFragment : Fragment() ,CategoryContract.View,CategoryAdapter.Listener {
+
 
     override fun gotoEditCategory(item :Category) {
         listener?.gotoEditCategory(item)
@@ -73,6 +75,30 @@ class CategoryFragment : Fragment() ,CategoryContract.View,CategoryAdapter.Liste
     override fun showdata(data: List<Category>) {
         recyclerView.adapter = CategoryAdapter(data,this)
     }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun gotoDelCategory(item: Category) {
+        val builder = AlertDialog.Builder(context)
+
+        builder.setTitle("Del Category")
+        builder.setMessage("Are you want Delete Category")
+        builder.setPositiveButton("YES"){dialog, which ->
+            presenter.delcategory(item,context)
+        }
+
+        builder.setNegativeButton("No"){dialog,which ->
+
+        }
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+    }
+
+    @RequiresApi(Build.VERSION_CODES.M)
+    override fun showmessage(mess: String) {
+        Log.d("Data : ", mess)
+        presenter.preparedata(context)
+    }
+
 
     companion object {
 

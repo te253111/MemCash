@@ -6,6 +6,9 @@ import android.arch.persistence.room.Query
 import android.arch.persistence.room.Update
 import com.example.kanokk.memcash.database.model.CategoryBase
 import io.reactivex.Flowable
+import android.arch.persistence.room.Delete
+
+
 
 @Dao
 interface CategoryDAO{
@@ -17,4 +20,7 @@ interface CategoryDAO{
 
     @Update
     fun update(categorybase: CategoryBase)
+
+    @Delete
+    fun delete(categorybase: CategoryBase)
 }

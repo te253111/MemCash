@@ -5,10 +5,12 @@ import android.util.Log
 import com.example.kanokk.memcash.database.maneger.MyDatabase
 import com.example.kanokk.memcash.database.model.CategoryBase
 import com.example.kanokk.memcash.model.Category
+import io.reactivex.Flowable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 
 class CategoryPresenter : CategoryContract.Presenter {
+
 
     var v : CategoryContract.View?=null
 
@@ -37,6 +39,22 @@ class CategoryPresenter : CategoryContract.Presenter {
             items.add(item)
         }
         return items
+    }
+
+
+
+    override fun delcategory(item: Category, context: Context) {
+        val category = CategoryBase(item.uid,item.code,item.name)
+        val appDatabase = MyDatabase.getAppDatabase(context)
+
+        Flowable.fromCallable {
+            appDatabase.categoryDao().delete(category)
+        }
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe {
+                    v?.showmessage("delete complete")
+                }
     }
 
 }
