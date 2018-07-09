@@ -22,6 +22,7 @@ class MainActivity : AppCompatActivity(),CategoryFragment.Listener,AddCategoryFr
     override fun gotoAddCategory() {
         val transaction = fragmentManager.beginTransaction()
         transaction.replace(R.id.frameLayoutContent, AddCategoryFragment.newInstance())
+        transaction.addToBackStack("add")
         transaction.commit()
     }
 
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity(),CategoryFragment.Listener,AddCategoryFr
     override fun gotoEditCategory(item : Category) {
         val transaction = fragmentManager.beginTransaction()
         transaction.replace(R.id.frameLayoutContent, EditCategoryFragment.newInstance(item))
+        transaction.addToBackStack("edit")
         transaction.commit()
     }
 
