@@ -39,8 +39,6 @@ class CategoryPresenter : CategoryContract.Presenter {
         return items
     }
 
-
-
     override fun delcategory(item: Category, context: Context) {
         val category = CategoryBase(item.uid,item.code,item.name)
         Flowable.fromCallable {

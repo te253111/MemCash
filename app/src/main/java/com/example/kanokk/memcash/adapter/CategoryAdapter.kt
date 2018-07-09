@@ -26,8 +26,14 @@ class  CategoryAdapter(var items:List<Category>,var listener : Listener)  : Recy
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.code_txt.setText(items.get(position).code)
         holder.category_txt.setText(items.get(position).name)
-        holder.itemView.setOnClickListener{listener.gotoEditCategory(items.get(position))}
-        holder.del_btn.setOnClickListener{listener.gotoDelCategory(items.get(position))}
+
+        holder.itemView.setOnClickListener{
+            listener.gotoEditCategory(items.get(position))
+        }
+
+        holder.del_btn.setOnClickListener{
+            listener.gotoDelCategory(items.get(position))
+        }
     }
 
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {

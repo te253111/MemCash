@@ -29,7 +29,7 @@
                 android:id="@+id/code_txt"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="8dp"
+                android:padding="16dp"
                 android:text="Code" />
 
             <TextView
@@ -41,11 +41,15 @@
                 android:text="Name" />
 
 
-            <Button
+            <ImageButton
                 android:id="@+id/del_btn"
-                android:text="Del"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="8dp"
+                android:background="@color/colorAccent"
+                android:src="@drawable/ic_highlight_off"
+                android:layout_width="30dp"
+                android:layout_height="30dp" />
+
         </LinearLayout>
 
 
