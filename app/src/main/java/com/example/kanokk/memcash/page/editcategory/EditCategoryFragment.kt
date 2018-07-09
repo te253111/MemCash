@@ -1,62 +1,58 @@
-package com.example.kanokk.memcash.page.category
+package com.example.kanokk.memcash.page.editcategory
 
 import android.content.Context
+import android.net.Uri
 import android.os.Bundle
 import android.app.Fragment
 import android.os.Build
 import android.support.annotation.RequiresApi
-import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 
 import com.example.kanokk.memcash.R
-import com.example.kanokk.memcash.adapter.CategoryAdapter
-import com.example.kanokk.memcash.database.model.CategoryBase
 import com.example.kanokk.memcash.model.Category
-import kotlinx.android.synthetic.main.fragment_category.*
+import kotlinx.android.synthetic.main.fragment_edit_category.*
 
-class CategoryFragment : Fragment() ,CategoryContract.View,CategoryAdapter.Listener {
 
-    override fun gotoEditCategory(item :Category) {
-        listener?.gotoEditCategory(item)
-    }
+class EditCategoryFragment : Fragment(),EditCategoryContract.View {
 
-    var presenter = CategoryPresenter()
+    var presenter = EditCategoryPresenter()
 
     var listener : Listener? = null
 
     interface Listener{
-        fun gotoAddCategory()
-        fun gotoEditCategory(item :Category)
+        fun gotoCategoryfromedit()
     }
+
+    private val ARG_PARAM1 = "param1"
+    private var param1: Category? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-
+            param1 = it.getParcelable(ARG_PARAM1)
         }
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_category, container, false)
+        return inflater.inflate(R.layout.fragment_edit_category, container, false)
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        presenter.preparedata()
         presenter.AddView(this)
-        presenter.preparedata(context)
 
-        textView.setText("Category")
+        editcodecategory_edt.setText(param1?.code)
+        editcategory_edt.setText(param1?.name)
 
-        recyclerView.layoutManager = LinearLayoutManager(context)
-
-        add_btn.setOnClickListener{
-            listener?.gotoAddCategory()
+        editcategory_btn.setOnClickListener{
+            presenter.editcategory(param1?.uid!!,editcodecategory_edt.text.toString(),editcategory_edt.text.toString(),context)
         }
     }
 
@@ -66,23 +62,23 @@ class CategoryFragment : Fragment() ,CategoryContract.View,CategoryAdapter.Liste
             listener =  context
         }
     }
+
     override fun onDetach() {
         super.onDetach()
     }
 
-    override fun showdata(data: List<Category>) {
-        recyclerView.adapter = CategoryAdapter(data,this)
+    override fun showmessage(mess: String) {
+        Log.d("Data : ", mess)
+        listener?.gotoCategoryfromedit()
     }
 
     companion object {
-
         @JvmStatic
-        fun newInstance() =
-                CategoryFragment().apply {
+        fun newInstance(param1: Category) =
+                EditCategoryFragment().apply {
                     arguments = Bundle().apply {
-
+                        putParcelable(ARG_PARAM1, param1)
                     }
                 }
     }
-
 }

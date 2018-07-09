@@ -8,7 +8,11 @@ import com.example.kanokk.memcash.R
 import com.example.kanokk.memcash.model.Category
 import kotlinx.android.synthetic.main.rows_category_items.view.*
 
-class  CategoryAdapter(var items:List<Category>)  : RecyclerView.Adapter<CategoryAdapter.ViewHolder>(){
+class  CategoryAdapter(var items:List<Category>,var listener : Listener)  : RecyclerView.Adapter<CategoryAdapter.ViewHolder>(){
+
+    interface Listener{
+        fun gotoEditCategory(item :Category)
+    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.rows_category_items, parent, false))
@@ -21,6 +25,7 @@ class  CategoryAdapter(var items:List<Category>)  : RecyclerView.Adapter<Categor
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.code_txt.setText(items.get(position).code)
         holder.category_txt.setText(items.get(position).name)
+        holder.itemView.setOnClickListener{listener.gotoEditCategory(items.get(position))}
     }
 
     class ViewHolder (view: View) : RecyclerView.ViewHolder(view) {

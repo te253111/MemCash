@@ -33,7 +33,7 @@ class CategoryPresenter : CategoryContract.Presenter {
         var items = ArrayList<Category>()
 
         for(d in datas){
-            var item = Category(d.code,d.name)
+            var item = Category(d.uid,d.code,d.name)
             items.add(item)
         }
         return items
