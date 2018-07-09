@@ -13,7 +13,7 @@ import android.arch.persistence.room.Delete
 @Dao
 interface CategoryDAO{
     @Query("SELECT * FROM cateory")
-    fun getAllPeople(): Flowable<List<CategoryBase>>
+    fun getAllCategory(): Flowable<List<CategoryBase>>
 
     @Insert
     fun insert(categorybase: CategoryBase)

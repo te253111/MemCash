@@ -73,7 +73,7 @@ class CategoryFragment : Fragment() ,CategoryContract.View,CategoryAdapter.Liste
     }
 
     override fun showdata(data: List<Category>) {
-        recyclerView.adapter = CategoryAdapter(data,this)
+        recyclerView?.adapter = CategoryAdapter(data,this)
     }
 
     @RequiresApi(Build.VERSION_CODES.M)

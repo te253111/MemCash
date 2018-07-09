@@ -2,6 +2,7 @@ package com.example.kanokk.memcash.page.category
 
 import android.content.Context
 import android.util.Log
+import com.example.kanokk.memcash.application.MyApplication
 import com.example.kanokk.memcash.database.maneger.MyDatabase
 import com.example.kanokk.memcash.database.model.CategoryBase
 import com.example.kanokk.memcash.model.Category
@@ -15,11 +16,8 @@ class CategoryPresenter : CategoryContract.Presenter {
     var v : CategoryContract.View?=null
 
     override fun preparedata(context: Context) {
-
-        val appDatabase = MyDatabase.getAppDatabase(context)
-
         Log.d("Data : ", "PreData")
-        appDatabase.categoryDao().getAllPeople()
+        MyApplication.myDatabase.categoryDao().getAllCategory()
                 ?.subscribeOn(Schedulers.io())
                 ?.observeOn(AndroidSchedulers.mainThread())
                 ?.subscribe { listOfPeople ->
@@ -45,10 +43,8 @@ class CategoryPresenter : CategoryContract.Presenter {
 
     override fun delcategory(item: Category, context: Context) {
         val category = CategoryBase(item.uid,item.code,item.name)
-        val appDatabase = MyDatabase.getAppDatabase(context)
-
         Flowable.fromCallable {
-            appDatabase.categoryDao().delete(category)
+            MyApplication.myDatabase.categoryDao().delete(category)
         }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

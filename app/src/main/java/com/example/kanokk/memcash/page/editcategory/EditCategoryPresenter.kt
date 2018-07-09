@@ -1,6 +1,7 @@
 package com.example.kanokk.memcash.page.editcategory
 
 import android.content.Context
+import com.example.kanokk.memcash.application.MyApplication
 import com.example.kanokk.memcash.database.maneger.MyDatabase
 import com.example.kanokk.memcash.database.model.CategoryBase
 import com.example.kanokk.memcash.model.Category
@@ -18,10 +19,9 @@ class EditCategoryPresenter : EditCategoryContract.Presenter{
 
     override fun editcategory(uid: Long, code: String, name: String, context: Context) {
         val category = CategoryBase(uid,code,name)
-        val appDatabase = MyDatabase.getAppDatabase(context)
 
         Flowable.fromCallable {
-            appDatabase.categoryDao().update(category)
+            MyApplication.myDatabase.categoryDao().update(category)
         }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

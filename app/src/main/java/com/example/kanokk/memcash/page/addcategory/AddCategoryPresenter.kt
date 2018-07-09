@@ -2,6 +2,7 @@ package com.example.kanokk.memcash.page.addcategory
 
 import android.content.Context
 import android.util.Log
+import com.example.kanokk.memcash.application.MyApplication
 import com.example.kanokk.memcash.database.maneger.MyDatabase
 import com.example.kanokk.memcash.database.model.CategoryBase
 import io.reactivex.Flowable
@@ -19,10 +20,9 @@ class AddCategoryPresenter : AddCategoryContract.Presenter{
 
     override fun addcategory(code: String, name: String, context: Context) {
         val category = CategoryBase(0,code,name)
-        val appDatabase = MyDatabase.getAppDatabase(context)
 
         Flowable.fromCallable {
-            appDatabase.categoryDao().insert(category)
+            MyApplication.myDatabase.categoryDao().insert(category)
         }
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
